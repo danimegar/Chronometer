@@ -23,6 +23,7 @@
  */
 package window;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -85,7 +86,6 @@ public class window extends javax.swing.JFrame {
         panel = new javax.swing.JPanel();
         labelTime = new javax.swing.JLabel();
         buttonStart = new javax.swing.JButton();
-        buttonPause = new javax.swing.JButton();
         buttonReset = new javax.swing.JButton();
         labelImage = new javax.swing.JLabel();
 
@@ -107,17 +107,7 @@ public class window extends javax.swing.JFrame {
                 buttonStartActionPerformed(evt);
             }
         });
-        panel.add(buttonStart, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 320, 90, 30));
-
-        buttonPause.setBackground(new java.awt.Color(190, 255, 255));
-        buttonPause.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        buttonPause.setText("Pause");
-        buttonPause.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonPauseActionPerformed(evt);
-            }
-        });
-        panel.add(buttonPause, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 320, 80, 30));
+        panel.add(buttonStart, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 330, 100, 30));
 
         buttonReset.setBackground(new java.awt.Color(190, 255, 255));
         buttonReset.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -127,7 +117,7 @@ public class window extends javax.swing.JFrame {
                 buttonResetActionPerformed(evt);
             }
         });
-        panel.add(buttonReset, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 320, 80, 30));
+        panel.add(buttonReset, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 330, 100, 30));
 
         labelImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Chronometer.png"))); // NOI18N
         panel.add(labelImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -146,30 +136,28 @@ public class window extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPauseActionPerformed
-        time.stop();
-        buttonStart.setEnabled(true);
-        buttonPause.setEnabled(false);
-    }//GEN-LAST:event_buttonPauseActionPerformed
-
     private void buttonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartActionPerformed
-        time.start();
-        buttonStart.setEnabled(false);
-        buttonStart.setText("Continue");
-        buttonStart.setFont(new Font("Arial", Font.BOLD, 13));
-        buttonPause.setEnabled(true);
-        buttonReset.setEnabled(true);
+        if (time.isRunning()) {
+            time.stop();
+            buttonStart.setText("Continue");
+            buttonStart.setBackground(new java.awt.Color(190, 255, 255));
+            buttonReset.setEnabled(true);
+        } else {
+            time.start();
+            buttonStart.setText("Pause");
+            buttonStart.setBackground(new java.awt.Color(204, 0, 0));
+            buttonStart.setBackground(Color.red);
+            buttonReset.setEnabled(true);
+        }
     }//GEN-LAST:event_buttonStartActionPerformed
 
     private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
         if (time.isRunning()) {
             time.stop();
-            buttonStart.setEnabled(true);
         }
-        buttonPause.setEnabled(false);
         buttonReset.setEnabled(false);
         buttonStart.setText("Start");
-        buttonStart.setFont(new Font("Arial", Font.BOLD, 14));
+        buttonStart.setBackground(new java.awt.Color(190, 255, 255));
         
         hours = 0;
         minutes = 0;
@@ -214,7 +202,6 @@ public class window extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonPause;
     private javax.swing.JButton buttonReset;
     private javax.swing.JButton buttonStart;
     private javax.swing.JLabel labelImage;
